@@ -1,5 +1,5 @@
 on: push
-name: Update test branch on release
+name: Update test branch on push
 jobs:
   updateBranch:
     name: Update test branch
@@ -7,7 +7,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - uses: Embraser01/update-git-branch-action@v1.0.0
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/main'
       with:
         branch: test
         force: false # To push-force to the branch
