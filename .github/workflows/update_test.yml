@@ -1,0 +1,14 @@
+on: push
+name: Update test branch on release
+jobs:
+  updateBranch:
+    name: Update test branch
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: Embraser01/update-git-branch-action@v1.0.0
+      if: github.ref == 'refs/heads/master'
+      with:
+        branch: test
+        force: false # To push-force to the branch
+        githubToken: ${{ secrets.PAT_TOKEN }} # Github Token
