@@ -1,14 +1,30 @@
-on: push
-name: Update test branch on push
+name: Update Test Branch
+
+on:
+  push:
+    branches: [main]
+    
+permissions: write-all
+
 jobs:
-  updateBranch:
-    name: Update test branch
+  sync:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - uses: Embraser01/update-git-branch-action@v1.0.0
-      if: github.ref == 'refs/heads/main'
-      with:
-        branch: test
-        force: 1 # To push-force to the branch
-        githubToken: ${{ secrets.PAT_TOKEN }} # Github Token
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Git User
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "<EMAIL>"
+
+      - name: Update Test Branch
+        run: |
+          git checkout main
+          git fetch origin
+          git checkout test
+          git pull
+          git merge origin/main
+          git push origin test
