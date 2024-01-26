@@ -10,5 +10,5 @@ jobs:
       if: github.ref == 'refs/heads/main'
       with:
         branch: test
-        force: false # To push-force to the branch
+        force: 1 # To push-force to the branch
         githubToken: ${{ secrets.PAT_TOKEN }} # Github Token
